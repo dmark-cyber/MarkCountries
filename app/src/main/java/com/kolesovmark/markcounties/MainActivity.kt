@@ -64,13 +64,4 @@ class MainActivity : AppCompatActivity() {
             "${((timeOnRestart - timeOnStop)*1e-9).seconds}",
             Toast.LENGTH_LONG).show()
     }
-//    private class Timer(val mills: Long, val interval: Long) : CountDownTimer(mills, interval) {
-//        override fun onTick(p0: Long) {
-//
-//        }
-//
-//        override fun onFinish() {
-//
-//        }
-//    }
 }
