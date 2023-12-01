@@ -19,15 +19,32 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        Toast.makeText(
-            this,
-            "OnCreate",
-            Toast.LENGTH_LONG).show()
+        binding.buttonToast.setOnClickListener {
+            Toast.makeText(
+                this,
+                "Clicked",
+                Toast.LENGTH_LONG).show()
+        }
+        binding.radioToast.setOnCheckedChangeListener { compoundButton, b ->
+            if (b) {
+                Toast.makeText(
+                    this,
+                    "Clicked Radio",
+                    Toast.LENGTH_LONG).show()
+            }
+        }
+        binding.switchToast.setOnCheckedChangeListener { compoundButton, b ->
+            if (b) {
+                Toast.makeText(
+                    this,
+                    "Clicked Switch",
+                    Toast.LENGTH_LONG).show()
+            }
+        }
 
     }
     override fun onStop() {
         super.onStop()
-
         timeOnStop = System.nanoTime()
     }
 
@@ -36,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         timeOnRestart = System.nanoTime()
         Toast.makeText(
             this,
-            "OnRestart",
+            "${((timeOnRestart - timeOnStop)*1e-9)} секунд",
             Toast.LENGTH_LONG).show()
     }
 

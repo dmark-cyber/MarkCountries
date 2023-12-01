@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MarkCountries</string>
+    <string name="toast">Toast!</string>
 </resources>
