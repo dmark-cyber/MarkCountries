@@ -3,8 +3,7 @@ package com.kolesovmark.markcounties
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
+import androidx.fragment.app.*
 import com.kolesovmark.markcounties.databinding.ActivityMainBinding
 import com.kolesovmark.markcounties.databinding.MyFragmentBinding
 import kotlin.time.Duration.Companion.seconds
@@ -24,11 +23,32 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         if (savedInstanceState == null) {
-            supportFragmentManager
-                .commit {
-                setReorderingAllowed(true)
-                add<MyFragment>(R.id.fragment_container_view)
+            initFragment()
+        }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timeOnStop = System.nanoTime()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        timeOnRestart = System.nanoTime()
+        Toast.makeText(
+            this,
+            "${((timeOnRestart - timeOnStop) * 1e-9)} секунд",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun initFragment() {
+        supportFragmentManager
+            .commit {
+                replace<MyFragment>(R.id.fragment_container_view)
                 var fragmentBinding = MyFragmentBinding.inflate(layoutInflater)
+                setReorderingAllowed(true)
                 fragmentBinding.buttonToast.setOnClickListener {
                     Toast.makeText(
                         this@MainActivity,
@@ -55,22 +75,5 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        timeOnStop = System.nanoTime()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        timeOnRestart = System.nanoTime()
-        Toast.makeText(
-            this,
-            "${((timeOnRestart - timeOnStop) * 1e-9)} секунд",
-            Toast.LENGTH_LONG
-        ).show()
     }
 }
